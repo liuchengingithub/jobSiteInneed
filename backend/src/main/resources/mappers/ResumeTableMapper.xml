@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inneed.backend.mapper.ResumeTableMapper">
+    <select id="getResumeById" resultType="com.inneed.backend.bean.ResumeTable">
+        select * from resume_table
+        where id = #{resumeId}
+    </select>
+
+    <update id="updateResume" parameterType="com.inneed.backend.bean.ResumeTable">
+        update resume_table
+        set name = #{resumeTable.name},
+            gender = #{resumeTable.gender},
+            birthDate = #{resumeTable.birthDate},
+            gender = #{resumeTable.gender},
+            phoneNumber = #{resumeTable.phoneNumber},
+            email = #{resumeTable.email},
+            city = #{resumeTable.city},
+            experience = #{resumeTable.experience}
+        where id = #{resumeId}
+    </update>
+
+    <insert id="addResume" useGeneratedKeys="true" keyProperty="id">
+        insert into resume_table(id, userId, name, gender, birthDate, phoneNumber, email, city, experience)
+        values (default,
+                #{userId},
+                #{name},
+                #{gender},
+                #{birthDate},
+                #{phoneNumber},
+                #{email},
+                #{city},
+                #{experience})
+    </insert>
+
+    <select id="getResumeId" resultType="long">
+        select id from resume_table
+        where userId = #{userId}
+    </select>
+</mapper>

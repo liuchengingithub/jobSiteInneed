@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inneed.backend.mapper.JobCategoryTableMapper">
+    <select id="getAllJobCategory" resultType="com.inneed.backend.bean.JobCategoryTable">
+        select * from jobcategory_table
+    </select>
+
+    <select id="getJobCategory" resultType="com.inneed.backend.bean.JobCategoryTable">
+        select  * from jobcategory_table
+        where category = #{category}
+    </select>
+
+    <select id="getCategoryAndChildren" resultType="com.inneed.backend.bean.JobCategoryTable">
+        select * from jobcategory_table
+        where id = #{id} or fatherCategoryId = #{id}
+    </select>
+
+    <insert id="addCategory" useGeneratedKeys="true" keyProperty="id">
+        insert into jobcategory_table(id, category, grade, fatherCategoryId, categoryState)
+        values (default, #{category}, #{grade}, #{fatherCategoryId}, #{categoryState})
+    </insert>
+
+    <delete id="deleteCategory">
+        <choose>
+            <when test="grade == 2">
+                delete
+                from jobcategory_table
+                where id = #{id}
+            </when>
+            <otherwise>
+                delete
+                from jobcategory_table
+                where id = #{id} or fatherCategoryId = #{id}
+            </otherwise>
+        </choose>
+    </delete>
+
+    <update id="updateCategory">
+        <choose>
+            <when test="category != null and category != ''">
+                update jobcategory_table
+                set category = #{category}
+                where id = #{id}
+            </when>
+            <when test="grade == 2 and categoryState != null and categoryState != ''">
+                update jobcategory_table
+                set categoryState = #{categoryState}
+                where id = #{id}
+            </when>
+            <otherwise>
+                update jobcategory_table
+                set categoryState = #{categoryState}
+                where id = #{id} or fatherCategoryId = #{id}
+            </otherwise>
+        </choose>
+    </update>
+</mapper>

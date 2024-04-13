@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inneed.backend.mapper.PositionTableMapper">
+    <select id="getPositionByKeyword" resultType="com.inneed.backend.bean.PositionTable">
+        <choose>
+            <when test="keyword == null or keyword == '' ">
+                select *
+                from position_table
+            </when>
+            <otherwise>
+                select *
+                from position_table
+                where
+                <bind name="keyword" value="'%'+keyword+'%'"/>
+                positionName like #{keyword} or companyName like #{keyword} or city like #{keyword} or description like #{keyword}
+            </otherwise>
+        </choose>
+    </select>
+    <select id="getPositionById" resultType="com.inneed.backend.bean.PositionTable">
+        <choose>
+        <when test="id == null or id == '' ">
+            select *
+            from position_table
+        </when>
+        <otherwise>
+            select * from position_table where id = #{id}
+        </otherwise>
+        </choose>
+    </select>
+    <select id="getPositionByCompanyId" resultType="com.inneed.backend.bean.PositionTable">
+        select *
+        from position_table
+        where companyId = #{companyId}
+    </select>
+    <update id="updatePosition" parameterType="com.inneed.backend.bean.PositionTable">
+        update position_table
+        set positionName = #{positionTable.positionName},
+            city = #{positionTable.city},
+            jobCategory = #{positionTable.jobCategory},
+            year = #{positionTable.year},
+            minSalary = #{positionTable.minSalary},
+            maxSalary = #{positionTable.maxSalary},
+            education = #{positionTable.education},
+            description = #{positionTable.description},
+            postDate = #{positionTable.postDate},
+            positionState = #{positionTable.positionState}
+        where id = #{positionId}
+    </update>
+    <update id="updatePositionState" parameterType="long">
+        update position_table
+        set positionState = #{positionState}
+        where id = #{positionId}
+    </update>
+    <insert id="addPosition" useGeneratedKeys="true" keyProperty="id">
+        insert into position_table(id, positionName, companyId, companyName, city, jobCategory, year,
+                                   minSalary, maxSalary, education, description, postDate, positionState)
+        values(default,
+               #{positionName},
+               #{companyId},
+               #{companyName},
+               #{city},
+               #{jobCategory},
+               #{year},
+               #{minSalary},
+               #{maxSalary},
+               #{education},
+               #{description},
+               #{postDate},
+               #{positionState})
+    </insert>
+</mapper>

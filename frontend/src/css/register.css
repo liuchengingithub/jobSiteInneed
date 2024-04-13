@@ -1,0 +1,21 @@
+.registerform {
+  background-color: #ffffff;
+  border-radius: 5px;
+  border: 1px solid #d4d2d0;
+  width: 500px;
+  margin: 100px auto;
+  margin-bottom: 500px;
+  padding: 20px;
+  z-index: 100;
+}
+.title {
+  text-align: center;
+  height: 80px;
+  line-height: 80px;
+  font-size: 30px;
+  color: #0000ff;
+}
+.roleSelect {
+  margin-bottom: 20px;
+  text-align: center;
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inneed.backend.mapper.CompanyTableMapper">
+    <select id="login" resultType="com.inneed.backend.bean.CompanyTable">
+        select c.*, r.rights
+        from company_table c
+        left join role_table r on c.roleId = r.id
+        where username = #{username} and password = #{password} and roleState = 1
+    </select>
+
+    <select id="getCompanyByCompanyName" resultType="com.inneed.backend.bean.CompanyTable">
+        select * from company_table
+        where username = #{companyName}
+    </select>
+
+    <select id="getAllCompanies" resultType="com.inneed.backend.bean.CompanyTable">
+        select * from company_table
+    </select>
+
+    <insert id="addCompany" useGeneratedKeys="true" keyProperty="id">
+        insert into company_table(id, username, password, roleId, roleState, companyName,introduction,
+                                  position, avatar)
+        values(default,
+               #{username},
+               #{password},
+               #{roleId},
+               #{roleState},
+               #{companyName},
+               #{introduction},
+               #{position},
+               #{avatar})
+    </insert>
+</mapper>

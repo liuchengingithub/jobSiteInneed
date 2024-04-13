@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inneed.backend.mapper.AdminTableMapper">
+    <select id="login" resultType="com.inneed.backend.bean.AdminTable">
+        select a.*, r.rights
+        from admin_table a
+        left join role_table r on a.roleId = r.id
+        where username = #{username} and password = #{password} and roleState = 1
+    </select>
+</mapper>

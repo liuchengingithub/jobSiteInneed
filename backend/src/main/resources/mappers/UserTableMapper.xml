@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inneed.backend.mapper.UserTableMapper">
+    <update id="updateUserApplyList" parameterType="java.util.Map">
+        update user_table set applications = #{applications}
+        where id = #{userId}
+    </update>
+
+    <select id="getUserById" resultType="com.inneed.backend.bean.UserTable">
+        select * from user_table
+        where id = #{userId}
+    </select>
+
+    <select id="getUserByUsername" resultType="com.inneed.backend.bean.UserTable">
+        select * from user_table
+        where username = #{username}
+    </select>
+
+    <select id="getAllUsers" resultType="com.inneed.backend.bean.UserTable">
+        select * from user_table
+    </select>
+
+    <select id="login" resultType="com.inneed.backend.bean.UserTable">
+        select u.*, r.rights
+        from user_table u
+        left join role_table r on u.roleId = r.id
+        where username = #{username} and password = #{password} and roleState = 1
+    </select>
+
+    <update id="updateResumeId" parameterType="java.util.Map">
+        update user_table set resumeId = #{resumeId}
+        where id = #{userId}
+    </update>
+
+    <select id="getUserWhenLogin" resultType="com.inneed.backend.bean.UserTable">
+        select u.*, r.roleName, r.roleType, r.rights
+        from user_table u, role_table r
+        where u.username = #{username} and u.password = #{password} and u.roleState = 1
+    </select>
+
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="id">
+        insert into user_table(id, username, password, name, roleId, roleState, gender,
+                               phoneNumber, email, wantJob, resumeId, applications)
+        values(default,
+               #{username},
+               #{password},
+               #{name},
+               #{roleId},
+               #{roleState},
+               #{gender},
+               #{phoneNumber},
+               #{email},
+               #{wantJob},
+               #{resumeId},
+               #{applications})
+    </insert>
+
+    <update id="updateRoleState">
+        <choose>
+            <when test=" roleId == 1 ">
+                update user_table
+                set roleState = !roleState
+                where id = #{userId}
+            </when>
+            <otherwise>
+                update company_table
+                set roleState = !roleState
+                where id = #{userId}
+            </otherwise>
+        </choose>
+    </update>
+</mapper>

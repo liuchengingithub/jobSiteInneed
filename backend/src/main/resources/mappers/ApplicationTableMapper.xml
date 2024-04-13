@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inneed.backend.mapper.ApplicationTableMapper">
+    <resultMap id="application_map" type="com.inneed.backend.bean.ApplicationTable">
+        <id column="id" property="id"/>
+        <result column="positionId" property="positionId" />
+        <result column="positionName" property="positionName" />
+        <result column="companyId" property="companyId" />
+        <result column="companyName" property="companyName" />
+        <result column="userId" property="userId" />
+        <result column="userName" property="userName" />
+        <result column="resumeId" property="resumeId" />
+        <result column="applyState" property="applyState" />
+        <collection property="positionDetail" ofType="com.inneed.backend.bean.PositionTable">
+            <id column="id" property="id"/>
+            <result column="positionName" property="positionName" />
+            <result column="companyId" property="companyId" />
+            <result column="companyName" property="companyName" />
+            <result column="city" property="city" />
+            <result column="jobCategory" property="jobCategory" />
+            <result column="year" property="year" />
+            <result column="minSalary" property="minSalary" />
+            <result column="maxSalary" property="maxSalary" />
+            <result column="education" property="education" />
+            <result column="description" property="description" />
+            <result column="postDate" property="postDate" />
+            <result column="positionState" property="positionState" />
+        </collection>
+    </resultMap>
+    <select id="getApplicationByUserId" resultMap="application_map">
+        select a.*, p.city, p.jobCategory, p.year, p.minSalary, p.maxSalary, p.education, p.description, p.postDate, p.positionState
+        from application_table a
+        left join position_table p on a.positionId = p.id
+        where a.userId = #{userId}
+    </select>
+    <insert id="insertApplication" useGeneratedKeys="true" keyProperty="id">
+        insert into application_table (id, positionId, positionName, companyId, companyName, userId, userName, resumeId, applyState)
+        values (default, #{positionId}, #{positionName}, #{companyId}, #{companyName}, #{userId}, #{userName}, #{resumeId}, #{applyState})
+    </insert>
+    <select id="getApplicationByCompanyId" resultType="com.inneed.backend.bean.ApplicationTable">
+        select * from application_table where companyId = #{companyId}
+    </select>
+    <update id="updateApplication" parameterType="com.inneed.backend.bean.ApplicationTable">
+        update application_table
+        set applyState = #{applicationTable.applyState}
+        where id = #{applicationId}
+
+    </update>
+</mapper>
