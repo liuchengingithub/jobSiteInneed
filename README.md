@@ -1,5 +1,4 @@
-This is a project inspired by the job search website indeed.com. The frontend is built using React.js and antd, while the backend utilizes Spring Boot and MyBatis.
-
+## 概要
 このプロジェクトは、求人検索ウェブサイトindeed.comをモデルにしています。
 ![image](https://github.com/user-attachments/assets/c6ae6d8e-ae51-4230-ba21-bf7fdcd12ffc)
 　　　　　　　　　　　　　　　　　　　ホームページ。求人情報を検索や閲覧、応募することが可能
@@ -17,7 +16,7 @@ This is a project inspired by the job search website indeed.com. The frontend is
 ![image](https://github.com/user-attachments/assets/cd23fe3c-237e-4397-9807-1c3b9197b65c)
 　　　　　　　　　　　　　　　　　　　ウェブサイトの管理者はウェブサイトの利用者全体（応募者と企業）の権限を審査することなどが可能
 
-技術スタック：  
+## 技術スタック：  
 フロントエンド：React.js, Ant Design  
 バックエンド：SpringBoot MVC, MyBatis  
 DB: mysql
