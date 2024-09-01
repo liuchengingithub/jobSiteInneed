@@ -17,7 +17,7 @@ This is a project inspired by the job search website indeed.com. The frontend is
 ![image](https://github.com/user-attachments/assets/cd23fe3c-237e-4397-9807-1c3b9197b65c)
 　　　　　　　　　　　　　　　　　　　ウェブサイトの管理者はウェブサイトの利用者全体（応募者と企業）の権限を審査することなどが可能
 
-技術スタッフ：  
+技術スタック：  
 フロントエンド：React.js, Ant Design  
 バックエンド：SpringBoot MVC, MyBatis  
 DB: mysql
